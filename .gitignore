@@ -1,4 +1,9 @@
 .idea/
 
+#
+# Eclipse
+#
+/.project
+
 dist/
 node_modules/
