@@ -3,5 +3,5 @@ export {XmlElementNode, firstChildNode, xmlElementNode, lastChildNode, isXmlElem
 export {XmlTextNode, xmlTextNode, isXmlTextNode} from './xmlTextNode';
 export {XmlCommentNode, isXmlCommentNode} from './xmlCommentNode';
 export {Either, Left, isLeft, Right, isRight} from './either';
-export {loadNewXml, parseNewXml, ParseResult, XmlReadConfig} from './xmlReading';
+export {loadNewXml, parseNewXml, ParseResult, XmlReadConfig, type LetterCorrection} from './xmlReading';
 export {XmlWriteConfig, writeNode} from './xmlWriting';

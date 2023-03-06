@@ -4,7 +4,7 @@ import {XmlNode} from "./xmlModel";
 import {Attributes, xmlElementNode} from "./xmlElement";
 import {xmlCommentNode} from "./xmlCommentNode";
 
-type LetterCorrection = [string, string][];
+export type LetterCorrection = [string, string][];
 
 interface NodeReadConfig {
   letterCorrections: LetterCorrection;
