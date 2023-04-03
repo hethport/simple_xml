@@ -1,4 +1,4 @@
-import {XmlNode} from "./xmlModel";
+import {XmlNode} from './xmlModel';
 
 export type Attributes = Record<string, string | undefined>;
 

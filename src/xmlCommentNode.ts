@@ -1,4 +1,4 @@
-import {XmlNode} from "./xmlModel";
+import {XmlNode} from './xmlModel';
 
 export interface XmlCommentNode {
   comment: string;

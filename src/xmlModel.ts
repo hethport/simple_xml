@@ -1,6 +1,6 @@
-import {XmlElementNode} from "./xmlElement";
-import {isXmlTextNode, XmlTextNode} from "./xmlTextNode";
-import {isXmlCommentNode, XmlCommentNode} from "./xmlCommentNode";
+import {XmlElementNode} from './xmlElement';
+import {isXmlTextNode, XmlTextNode} from './xmlTextNode';
+import {isXmlCommentNode, XmlCommentNode} from './xmlCommentNode';
 
 export type XmlNonEmptyNode = XmlElementNode | XmlTextNode;
 

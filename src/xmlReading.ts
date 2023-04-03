@@ -1,8 +1,8 @@
 import {Either} from './either';
-import {isXmlTextNode, xmlTextNode} from "./xmlTextNode";
-import {XmlNode} from "./xmlModel";
-import {Attributes, xmlElementNode} from "./xmlElement";
-import {xmlCommentNode} from "./xmlCommentNode";
+import {isXmlTextNode, xmlTextNode} from './xmlTextNode';
+import {XmlNode} from './xmlModel';
+import {Attributes, xmlElementNode} from './xmlElement';
+import {xmlCommentNode} from './xmlCommentNode';
 
 export type LetterCorrection = [string, string][];
 

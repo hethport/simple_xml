@@ -1,14 +1,16 @@
 import {XmlNode} from './xmlModel';
-import {isXmlCommentNode} from "./xmlCommentNode";
-import {isXmlTextNode} from "./xmlTextNode";
+import {isXmlCommentNode} from './xmlCommentNode';
+import {isXmlTextNode} from './xmlTextNode';
+import {Attributes} from './xmlElement';
 
-export interface XmlWriteConfig {
-  inlineChildrenOf: string[];
+export interface NodeWriteConfig {
+  inlineChildren: boolean;
+  orderAttributes?: (attributes: Attributes) => [string, string | undefined][];
 }
 
-const emptyWriteConfig: XmlWriteConfig = {
-  inlineChildrenOf: [],
-};
+export interface XmlWriteConfig {
+  [tagName: string]: NodeWriteConfig;
+}
 
 function writeAttributeValue(value: string): string {
   return value
@@ -22,7 +24,7 @@ function writeAttributeValue(value: string): string {
 
 const indent = (s: string, count = 2): string => ' '.repeat(count) + s;
 
-export function writeNode(node: XmlNode, xmlWriteConfig: XmlWriteConfig = emptyWriteConfig, parentInline = false, indentCount = 2): string[] {
+export function writeNode(node: XmlNode, xmlWriteConfig: XmlWriteConfig = {}, parentInline = false, indentCount = 2): string[] {
   if (isXmlCommentNode(node)) {
     return [`<!-- ${node.comment} -->`];
   }
@@ -33,8 +35,15 @@ export function writeNode(node: XmlNode, xmlWriteConfig: XmlWriteConfig = emptyW
 
   const {tagName, attributes, children} = node;
 
-  const writtenAttributes = Object.entries(attributes)
-    .flatMap(([name, value]) => value !== undefined ? [`${name}="${writeAttributeValue(value)}"`] : [])
+  const writeConfig: NodeWriteConfig | undefined = xmlWriteConfig[tagName];
+
+  const attributesToWrite = writeConfig && writeConfig.orderAttributes !== undefined
+    ? writeConfig.orderAttributes(attributes)
+    : Object.entries(attributes);
+
+  const writtenAttributes = attributesToWrite
+    .filter((attr): attr is [string, string] => attr[1] !== undefined)
+    .map(([name, value]) => `${name}="${writeAttributeValue(value)}"`)
     .join(' ');
 
   if (children.length === 0) {
@@ -47,7 +56,8 @@ export function writeNode(node: XmlNode, xmlWriteConfig: XmlWriteConfig = emptyW
     return [`<${tagName}${writtenAttributes.length === 0 ? '' : ' ' + writtenAttributes}>${firstChild.textContent}</${tagName}>`];
   }
 
-  const inlineChildren = xmlWriteConfig.inlineChildrenOf.includes(tagName) || parentInline;
+
+  const inlineChildren = writeConfig?.inlineChildren || parentInline;
 
   const writtenChildren = children.flatMap((n) => writeNode(n, xmlWriteConfig, inlineChildren));
 
