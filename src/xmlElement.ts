@@ -16,6 +16,10 @@ export function xmlElementNode<TagName extends string = string>(
   return {tagName, attributes, children};
 }
 
+export function hasTagName<S extends string>(node: XmlElementNode, s: S): node is XmlElementNode<S> {
+  return node.tagName === s;
+}
+
 export const isXmlElementNode = (node: XmlNode): node is XmlElementNode => 'tagName' in node;
 
 export const firstChildNode = ({children}: XmlElementNode): XmlNode | undefined => children[0];
