@@ -1,19 +1,28 @@
-export interface Left<E> {
-  _type: 'Left';
-  value: E;
+abstract class IEither<L, R> {
+
+  abstract map<S>(f: ((r: R) => S)): IEither<L, S>;
+
 }
 
-export function isLeft<E, S>(either: Either<E, S>): either is Left<E> {
-  return either._type === 'Left';
+export class MyLeft<L> extends IEither<L, never> {
+  constructor(public readonly value: L) {
+    super();
+  }
+
+  override map<S>(): IEither<L, S> {
+    return this;
+  }
 }
 
-export interface Right<S> {
-  _type: 'Right';
-  value: S;
+export class MyRight<R> extends IEither<never, R> {
+  constructor(public readonly value: R) {
+    super();
+  }
+
+  override map<S>(f: (r: R) => S): IEither<never, S> {
+    return new MyRight(f(this.value));
+  }
 }
 
-export function isRight<E, S>(either: Either<E, S>): either is Right<S> {
-  return either._type === 'Right';
-}
+export type MyEither<L, R> = MyLeft<L> | MyRight<R>
 
-export type Either<E, S> = Left<E> | Right<S>;

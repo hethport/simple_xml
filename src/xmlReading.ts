@@ -1,4 +1,4 @@
-import {Either} from './either';
+import {MyEither, MyLeft, MyRight} from './either';
 import {isXmlTextNode, xmlTextNode} from './xmlTextNode';
 import {XmlNode} from './xmlModel';
 import {Attributes, xmlElementNode} from './xmlElement';
@@ -49,7 +49,7 @@ function loadNode(el: ChildNode, xmlReadConfig: XmlReadConfig, parentLetterCorre
   throw new Error(`unexpected element: ${el.nodeType}`);
 }
 
-export type ParseResult = Either<string, XmlNode>;
+export type ParseResult = MyEither<string, XmlNode>;
 
 export function parseNewXml(content: string, xmlReadConfig: XmlReadConfig = {}): ParseResult {
   const doc = new DOMParser().parseFromString(content, 'text/xml');
@@ -57,9 +57,9 @@ export function parseNewXml(content: string, xmlReadConfig: XmlReadConfig = {}):
   const rootElement = doc.children[0];
 
   if (rootElement.tagName === 'parsererror') {
-    return {_type: 'Left', value: new XMLSerializer().serializeToString(rootElement)};
+    return new MyLeft(new XMLSerializer().serializeToString(rootElement));
   } else {
-    return {_type: 'Right', value: loadNode(rootElement, xmlReadConfig)};
+    return new MyRight(loadNode(rootElement, xmlReadConfig));
   }
 }
 
