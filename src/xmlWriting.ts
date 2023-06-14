@@ -24,7 +24,11 @@ function writeAttributeValue(value: string): string {
 
 const indent = (s: string, count = 2): string => ' '.repeat(count) + s;
 
-export function writeNode(node: XmlNode, xmlWriteConfig: XmlWriteConfig = {}, parentInline = false, indentCount = 2): string[] {
+export function writeNodeWithDefaultWriteConfig(node: XmlNode, parentInline = false, indentCount = 2): string[] {
+  return writeNode(node, {}, parentInline, indentCount);
+}
+
+export function writeNode(node: XmlNode, xmlWriteConfig: XmlWriteConfig, parentInline = false, indentCount = 2): string[] {
   if (isXmlCommentNode(node)) {
     return [`<!-- ${node.comment} -->`];
   }

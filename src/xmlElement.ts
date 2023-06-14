@@ -1,10 +1,10 @@
 import {XmlNode} from './xmlModel';
 
-export type Attributes = Record<string, string | undefined>;
+export type Attributes<A extends string = string> = { [key in A]: string | undefined };
 
-export interface XmlElementNode<TagName extends string = string> {
+export interface XmlElementNode<TagName extends string = string, A extends string = string> {
   tagName: TagName;
-  attributes: Attributes;
+  attributes: Attributes<A>;
   children: XmlNode[];
 }
 

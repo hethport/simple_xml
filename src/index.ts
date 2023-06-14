@@ -3,5 +3,7 @@ export {XmlElementNode, hasTagName, firstChildNode, xmlElementNode, lastChildNod
 export {XmlTextNode, xmlTextNode, isXmlTextNode} from './xmlTextNode';
 export {XmlCommentNode, isXmlCommentNode} from './xmlCommentNode';
 export {MyLeft, MyRight, MyEither} from './either';
-export {loadNewXml, parseNewXml, ParseResult, XmlReadConfig, type LetterCorrection} from './xmlReading';
-export {XmlWriteConfig, writeNode} from './xmlWriting';
+export {
+  loadNewXml, loadXmlWithDefaultReadConfig, parseNewXml, parseXmlWithDefaultReadConfig, ParseResult, XmlReadConfig, type LetterCorrection
+} from './xmlReading';
+export {XmlWriteConfig, writeNode, writeNodeWithDefaultWriteConfig} from './xmlWriting';

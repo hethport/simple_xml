@@ -51,7 +51,11 @@ function loadNode(el: ChildNode, xmlReadConfig: XmlReadConfig, parentLetterCorre
 
 export type ParseResult = MyEither<string, XmlNode>;
 
-export function parseNewXml(content: string, xmlReadConfig: XmlReadConfig = {}): ParseResult {
+export function parseXmlWithDefaultReadConfig(content: string): ParseResult {
+  return parseNewXml(content, {});
+}
+
+export function parseNewXml(content: string, xmlReadConfig: XmlReadConfig): ParseResult {
   const doc = new DOMParser().parseFromString(content, 'text/xml');
 
   const rootElement = doc.children[0];
@@ -63,7 +67,11 @@ export function parseNewXml(content: string, xmlReadConfig: XmlReadConfig = {}):
   }
 }
 
-export async function loadNewXml(file: File, xmlReadConfig: XmlReadConfig = {}): Promise<ParseResult> {
+export async function loadXmlWithDefaultReadConfig(file: File): Promise<ParseResult> {
+  return loadNewXml(file, {});
+}
+
+export async function loadNewXml(file: File, xmlReadConfig: XmlReadConfig): Promise<ParseResult> {
   return parseNewXml(
     // non-breakable space to normal space
     (await file.text()).replace(/\xa0/g, ''),
