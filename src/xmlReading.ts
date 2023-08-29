@@ -58,12 +58,12 @@ export function parseXmlWithDefaultReadConfig(content: string): ParseResult {
 export function parseNewXml(content: string, xmlReadConfig: XmlReadConfig): ParseResult {
   const doc = new DOMParser().parseFromString(content, 'text/xml');
 
-  const rootElement = doc.children[0];
+  const parserErrorElement = doc.querySelector('parsererror');
 
-  if (rootElement.tagName === 'parsererror') {
-    return new MyLeft(new XMLSerializer().serializeToString(rootElement));
+  if (parserErrorElement !== null) {
+    return new MyLeft(new XMLSerializer().serializeToString(parserErrorElement));
   } else {
-    return new MyRight(loadNode(rootElement, xmlReadConfig));
+    return new MyRight(loadNode(doc.children[0], xmlReadConfig));
   }
 }
 
