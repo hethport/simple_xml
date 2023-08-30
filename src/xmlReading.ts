@@ -61,7 +61,7 @@ export function parseNewXml(content: string, xmlReadConfig: XmlReadConfig): Pars
   const parserErrorElement = doc.querySelector('parsererror');
 
   if (parserErrorElement !== null) {
-    return new MyLeft(new XMLSerializer().serializeToString(parserErrorElement));
+    return new MyLeft(parserErrorElement.textContent || '');
   } else {
     return new MyRight(loadNode(doc.children[0], xmlReadConfig));
   }
